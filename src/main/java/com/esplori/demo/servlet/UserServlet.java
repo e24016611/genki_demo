@@ -48,7 +48,8 @@ public class UserServlet {
     CustomReponse<String> creaateUser(@PathVariable String address, @RequestParam(required = false) String inviter){
         CustomReponse<String> result = new CustomReponse<>();
         try {
-            userRepository.save(new UserInfo(address, 1, 100, getMd5(address), inviter));
+            String md5Address = getMd5(address);
+            userRepository.save(new UserInfo(address, 1, 100, md5Address, "invite/" + md5Address, inviter ));
             result.setSuccessed(true);
         } catch (Exception e) {
             e.printStackTrace();

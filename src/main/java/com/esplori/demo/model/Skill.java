@@ -16,6 +16,7 @@ public class Skill {
     @Id
     private String id;
     private String title;
+    private String subtitle;
     private String description;
     private String logo;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -25,9 +26,10 @@ public class Skill {
     public Skill() {
     }
 
-    public Skill(String id, String title, String description, String logo, List<Task> tasks) {
+    public Skill(String id, String title, String subtitle, String description, String logo, List<Task> tasks) {
         this.id = id;
         this.title = title;
+        this.subtitle = subtitle;
         this.description = description;
         this.logo = logo;
         this.tasks = tasks;
@@ -47,6 +49,14 @@ public class Skill {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getSubtitle() {
+        return this.subtitle;
+    }
+
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
     }
 
     public String getDescription() {
@@ -83,6 +93,11 @@ public class Skill {
         return this;
     }
 
+    public Skill subtitle(String subtitle) {
+        setSubtitle(subtitle);
+        return this;
+    }
+
     public Skill description(String description) {
         setDescription(description);
         return this;
@@ -106,12 +121,12 @@ public class Skill {
             return false;
         }
         Skill skill = (Skill) o;
-        return Objects.equals(id, skill.id) && Objects.equals(title, skill.title) && Objects.equals(description, skill.description) && Objects.equals(logo, skill.logo) && Objects.equals(tasks, skill.tasks);
+        return Objects.equals(id, skill.id) && Objects.equals(title, skill.title) && Objects.equals(subtitle, skill.subtitle) && Objects.equals(description, skill.description) && Objects.equals(logo, skill.logo) && Objects.equals(tasks, skill.tasks);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, logo, tasks);
+        return Objects.hash(id, title, subtitle, description, logo, tasks);
     }
 
     @Override
@@ -119,11 +134,11 @@ public class Skill {
         return "{" +
             " id='" + getId() + "'" +
             ", title='" + getTitle() + "'" +
+            ", subtitle='" + getSubtitle() + "'" +
             ", description='" + getDescription() + "'" +
             ", logo='" + getLogo() + "'" +
             ", tasks='" + getTasks() + "'" +
             "}";
     }
-
 
 }

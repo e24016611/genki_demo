@@ -17,16 +17,19 @@ public class UserInfo {
     private Integer expToNextLevel;
     @JsonProperty("referral_code")
     private String referralCode ;
+    @JsonProperty("referral_url")
+    private String referralUrl ;
     private String inviter;
 
     public UserInfo() {
     }
 
-    public UserInfo(String address, Integer level, Integer expToNextLevel, String referralCode, String inviter) {
+    public UserInfo(String address, Integer level, Integer expToNextLevel, String referralCode, String referralUrl, String inviter) {
         this.address = address;
         this.level = level;
         this.expToNextLevel = expToNextLevel;
         this.referralCode = referralCode;
+        this.referralUrl = referralUrl;
         this.inviter = inviter;
     }
 
@@ -62,6 +65,14 @@ public class UserInfo {
         this.referralCode = referralCode;
     }
 
+    public String getReferralUrl() {
+        return this.referralUrl;
+    }
+
+    public void setReferralUrl(String referralUrl) {
+        this.referralUrl = referralUrl;
+    }
+
     public String getInviter() {
         return this.inviter;
     }
@@ -90,6 +101,11 @@ public class UserInfo {
         return this;
     }
 
+    public UserInfo referralUrl(String referralUrl) {
+        setReferralUrl(referralUrl);
+        return this;
+    }
+
     public UserInfo inviter(String inviter) {
         setInviter(inviter);
         return this;
@@ -103,12 +119,12 @@ public class UserInfo {
             return false;
         }
         UserInfo userInfo = (UserInfo) o;
-        return Objects.equals(address, userInfo.address) && Objects.equals(level, userInfo.level) && Objects.equals(expToNextLevel, userInfo.expToNextLevel) && Objects.equals(referralCode, userInfo.referralCode) && Objects.equals(inviter, userInfo.inviter);
+        return Objects.equals(address, userInfo.address) && Objects.equals(level, userInfo.level) && Objects.equals(expToNextLevel, userInfo.expToNextLevel) && Objects.equals(referralCode, userInfo.referralCode) && Objects.equals(referralUrl, userInfo.referralUrl) && Objects.equals(inviter, userInfo.inviter);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(address, level, expToNextLevel, referralCode, inviter);
+        return Objects.hash(address, level, expToNextLevel, referralCode, referralUrl, inviter);
     }
 
     @Override
@@ -118,9 +134,11 @@ public class UserInfo {
             ", level='" + getLevel() + "'" +
             ", expToNextLevel='" + getExpToNextLevel() + "'" +
             ", referralCode='" + getReferralCode() + "'" +
+            ", referralUrl='" + getReferralUrl() + "'" +
             ", inviter='" + getInviter() + "'" +
             "}";
     }
+
 
 
 }

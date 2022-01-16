@@ -49,6 +49,7 @@ public class SwapMission extends Mission {
                 Thread.sleep(10 * 1000);
                 
             }
+            System.out.println("completed");
             getTaskCompletedRepository().save(new TaskCompleted(new TaskCompletedId("1", getAddress()), dateFormat.format(new Date())));
         } catch (Exception e) {
             e.printStackTrace();

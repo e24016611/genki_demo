@@ -27,22 +27,33 @@ public class ToolsServlet {
         try {
             Skill skill = new Skill();
             skill.setId("1");
-            skill.setTitle("BSC快速上手系列");
-            skill.setDescription("swap ant token on PancakeSwap, the largest dex of bsc");
+            skill.setTitle("BSC");
+            skill.setSubtitle("Explore popular Dapps and accelerate your crypto journey");
+            skill.setDescription("BSC Explorer (Swap, Yield Farming, and more…)");
+            skill.setLogo("resource/bsc.jpg");
             skill.setTasks(new ArrayList<>());
     
             Task task = new Task();
             task.setId("1");
-            task.setTitle("swap ant token on PancakeSwap");
-            task.setDescription("swap ant token on PancakeSwap, the largest dex of bsc");
+            task.setTitle("Swap token on the BNB-BUSD pair");
+            task.setDescription("swap any token on PancakeSwap, the largest DEX on BSC");
             task.setTag_appear("bsc_tutorial");
             task.setTag_network("bsc");
             task.setTag_project("bsc");
             task.setExp(100);
-            task.setLogo("resource/logo/bsc.png");
+            task.setLogo("resource/pancake.jpg");
+            task.setRedirect_url("https://pancakeswap.finance/swap");
+
+            Skill skill2 = new Skill();
+            skill2.setId("2");
+            skill2.setTitle("SOLANA");
+            skill2.setDescription("Solana Explorer (Coming soon)");
+            skill2.setLogo("resource/solana.jpg");
+            skill2.setTasks(new ArrayList<>());
     
             skill.getTasks().add(task);
             skillRepository.save(skill);
+            skillRepository.save(skill2);
     
             Skill test = skillRepository.findById("1").orElse(null);
             System.out.println(test);

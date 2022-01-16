@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity
@@ -25,12 +24,14 @@ public class Task {
     @Transient
     private boolean completed;
     private String logo; 
+    private String redirect_url;
 
     public Task() {
     }
 
-    public Task(String id, String title, String description, String tag_appear, String tag_network, String tag_project, Integer exp, boolean completed, String logo) {
+    public Task(String id, String skill_id, String title, String description, String tag_appear, String tag_network, String tag_project, Integer exp, boolean completed, String logo, String redirect_url) {
         this.id = id;
+        this.skill_id = skill_id;
         this.title = title;
         this.description = description;
         this.tag_appear = tag_appear;
@@ -39,6 +40,7 @@ public class Task {
         this.exp = exp;
         this.completed = completed;
         this.logo = logo;
+        this.redirect_url = redirect_url;
     }
 
     public String getId() {
@@ -57,7 +59,6 @@ public class Task {
         this.skill_id = skill_id;
     }
 
-
     public String getTitle() {
         return this.title;
     }
@@ -74,39 +75,24 @@ public class Task {
         this.description = description;
     }
 
-    @JsonGetter("tag_appear")
-    public String[] getTag_appear() {
-        String[] result = null;
-        if(tag_appear != null){
-            result = tag_appear.split(",");
-        }
-        return result;
+    public String getTag_appear() {
+        return this.tag_appear;
     }
 
     public void setTag_appear(String tag_appear) {
         this.tag_appear = tag_appear;
     }
 
-    @JsonGetter("tag_network")
-    public String[] getTag_network() {
-        String[] result = null;
-        if(tag_network != null){
-            result = tag_network.split(",");
-        }
-        return result;
+    public String getTag_network() {
+        return this.tag_network;
     }
 
     public void setTag_network(String tag_network) {
         this.tag_network = tag_network;
     }
 
-    @JsonGetter("tag_project")
-    public String[] getTag_project() {
-        String[] result = null;
-        if(tag_project != null){
-            result = tag_project.split(",");
-        }
-        return result;
+    public String getTag_project() {
+        return this.tag_project;
     }
 
     public void setTag_project(String tag_project) {
@@ -141,8 +127,21 @@ public class Task {
         this.logo = logo;
     }
 
+    public String getRedirect_url() {
+        return this.redirect_url;
+    }
+
+    public void setRedirect_url(String redirect_url) {
+        this.redirect_url = redirect_url;
+    }
+
     public Task id(String id) {
         setId(id);
+        return this;
+    }
+
+    public Task skill_id(String skill_id) {
+        setSkill_id(skill_id);
         return this;
     }
 
@@ -153,6 +152,21 @@ public class Task {
 
     public Task description(String description) {
         setDescription(description);
+        return this;
+    }
+
+    public Task tag_appear(String tag_appear) {
+        setTag_appear(tag_appear);
+        return this;
+    }
+
+    public Task tag_network(String tag_network) {
+        setTag_network(tag_network);
+        return this;
+    }
+
+    public Task tag_project(String tag_project) {
+        setTag_project(tag_project);
         return this;
     }
 
@@ -171,6 +185,11 @@ public class Task {
         return this;
     }
 
+    public Task redirect_url(String redirect_url) {
+        setRedirect_url(redirect_url);
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -179,18 +198,19 @@ public class Task {
             return false;
         }
         Task task = (Task) o;
-        return Objects.equals(id, task.id) && Objects.equals(title, task.title) && Objects.equals(description, task.description) && Objects.equals(tag_appear, task.tag_appear) && Objects.equals(tag_network, task.tag_network) && Objects.equals(tag_project, task.tag_project) && Objects.equals(exp, task.exp) && completed == task.completed && Objects.equals(logo, task.logo);
+        return Objects.equals(id, task.id) && Objects.equals(skill_id, task.skill_id) && Objects.equals(title, task.title) && Objects.equals(description, task.description) && Objects.equals(tag_appear, task.tag_appear) && Objects.equals(tag_network, task.tag_network) && Objects.equals(tag_project, task.tag_project) && Objects.equals(exp, task.exp) && completed == task.completed && Objects.equals(logo, task.logo) && Objects.equals(redirect_url, task.redirect_url);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, tag_appear, tag_network, tag_project, exp, completed, logo);
+        return Objects.hash(id, skill_id, title, description, tag_appear, tag_network, tag_project, exp, completed, logo, redirect_url);
     }
 
     @Override
     public String toString() {
         return "{" +
             " id='" + getId() + "'" +
+            ", skill_id='" + getSkill_id() + "'" +
             ", title='" + getTitle() + "'" +
             ", description='" + getDescription() + "'" +
             ", tag_appear='" + getTag_appear() + "'" +
@@ -199,10 +219,9 @@ public class Task {
             ", exp='" + getExp() + "'" +
             ", completed='" + isCompleted() + "'" +
             ", logo='" + getLogo() + "'" +
+            ", redirect_url='" + getRedirect_url() + "'" +
             "}";
     }
-
-
 
 
 }
