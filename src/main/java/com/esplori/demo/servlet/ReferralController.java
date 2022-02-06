@@ -33,6 +33,8 @@ public class ReferralController {
                 Refferal refferal = new Refferal();
                 refferal.setReferralCode(user.getReferralCode());
                 refferal.setRefereeCount(userRepository.countByInviter(user.getReferralCode()).intValue());
+                refferal.setTotalPoints(refferal.getRefereeCount());
+                refferal.setRank(refferal.getRefereeCount());
                 response.setData(refferal);
                 response.setSuccessed(true);
             }else{

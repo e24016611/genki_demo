@@ -10,13 +10,19 @@ public class Refferal {
     private String referralCode;
     @JsonProperty("referee_count")
     private int refereeCount;
+    @JsonProperty("rank")
+    private int rank;
+    @JsonProperty("total_points")
+    private int totalPoints;
 
     public Refferal() {
     }
 
-    public Refferal(String referralCode, int refereeCount) {
+    public Refferal(String referralCode, int refereeCount, int rank, int totalPoints) {
         this.referralCode = referralCode;
         this.refereeCount = refereeCount;
+        this.rank = rank;
+        this.totalPoints = totalPoints;
     }
 
     public String getReferralCode() {
@@ -35,6 +41,22 @@ public class Refferal {
         this.refereeCount = refereeCount;
     }
 
+    public int getRank() {
+        return this.rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
+
+    public int getTotalPoints() {
+        return this.totalPoints;
+    }
+
+    public void setTotalPoints(int totalPoints) {
+        this.totalPoints = totalPoints;
+    }
+
     public Refferal referralCode(String referralCode) {
         setReferralCode(referralCode);
         return this;
@@ -42,6 +64,16 @@ public class Refferal {
 
     public Refferal refereeCount(int refereeCount) {
         setRefereeCount(refereeCount);
+        return this;
+    }
+
+    public Refferal rank(int rank) {
+        setRank(rank);
+        return this;
+    }
+
+    public Refferal totalPoints(int totalPoints) {
+        setTotalPoints(totalPoints);
         return this;
     }
 
@@ -53,20 +85,22 @@ public class Refferal {
             return false;
         }
         Refferal refferal = (Refferal) o;
-        return Objects.equals(referralCode, refferal.referralCode) && refereeCount == refferal.refereeCount;
+        return Objects.equals(referralCode, refferal.referralCode) && refereeCount == refferal.refereeCount && rank == refferal.rank && totalPoints == refferal.totalPoints;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(referralCode, refereeCount);
+        return Objects.hash(referralCode, refereeCount, rank, totalPoints);
     }
 
     @Override
     public String toString() {
         return "{" +
-                " referralCode='" + getReferralCode() + "'" +
-                ", refereeCount='" + getRefereeCount() + "'" +
-                "}";
+            " referralCode='" + getReferralCode() + "'" +
+            ", refereeCount='" + getRefereeCount() + "'" +
+            ", rank='" + getRank() + "'" +
+            ", totalPoints='" + getTotalPoints() + "'" +
+            "}";
     }
 
 }
