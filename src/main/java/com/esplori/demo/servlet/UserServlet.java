@@ -3,10 +3,17 @@ package com.esplori.demo.servlet;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import com.esplori.demo.model.CustomReponse;
+import com.esplori.demo.model.Task;
+import com.esplori.demo.model.TaskCompleted;
+import com.esplori.demo.model.TaskLog;
 import com.esplori.demo.model.UserInfo;
+import com.esplori.demo.repository.TaskCompletedRepository;
+import com.esplori.demo.repository.TaskRepository;
 import com.esplori.demo.repository.UserInfoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +30,10 @@ public class UserServlet {
 
     @Autowired
     UserInfoRepository userRepository;
+    @Autowired
+    TaskCompletedRepository taskCompletedRepository;
+    @Autowired
+    TaskRepository taskRepository;
     
     @GetMapping("{address}")
     CustomReponse<UserInfo> getUser(@PathVariable String address){
@@ -58,6 +69,46 @@ public class UserServlet {
         return result;
     }
 
+    @GetMapping("{address}/history/dapp")
+    CustomReponse<List<TaskLog>> getHistoryDapp(@PathVariable String address, @RequestParam(required = false) String sdate, @RequestParam(required = false) String edate){
+        CustomReponse<List<TaskLog>> result = new CustomReponse<>();
+        try {
+            List<TaskCompleted> taskCompleteds = taskCompletedRepository.findByAddress(address);
+            List<TaskLog> data = new ArrayList<>();
+            for (TaskCompleted taskCompleted : taskCompleteds) {
+                data.add(generateFromTaskCompleted(taskCompleted));
+            }
+            result.setData(data);
+            result.setSuccessed(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return result;
+    }
+    
+
+    @GetMapping("{address}/history/referral")
+    CustomReponse<List<TaskLog>> getHistoryReferral(@PathVariable String address, @RequestParam(required = false) String sdate, @RequestParam(required = false) String edate){
+        CustomReponse<List<TaskLog>> result = new CustomReponse<>();
+        try {
+            String md5Address = getMd5(address);
+            List<UserInfo> userInfos = userRepository.findByInviter(md5Address); 
+            List<TaskLog> data = new ArrayList<>();
+            for (UserInfo userInfo : userInfos) {
+                List<TaskCompleted> taskCompleteds = taskCompletedRepository.findByAddress(userInfo.getAddress());
+                for (TaskCompleted taskCompleted : taskCompleteds) {
+                    data.add(generateFromTaskCompleted(taskCompleted));
+                }
+            }
+            result.setData(data);
+            result.setSuccessed(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
 
     public static String getMd5(String input) 
     { 
@@ -86,4 +137,15 @@ public class UserServlet {
             throw new RuntimeException(e); 
         } 
     } 
+
+    private TaskLog generateFromTaskCompleted(TaskCompleted taskCompleted){
+        TaskLog taskLog = null;
+        try {
+            Task task = taskRepository.findById(taskCompleted.getId().getTaskid()).get();
+            taskLog = new TaskLog(taskCompleted.getCompletedTime(), taskCompleted.getId().getAddress(), task.getTitle(), "event type #1");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return taskLog;
+    }
 }
