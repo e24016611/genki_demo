@@ -30,6 +30,10 @@ public class SkillController {
 
     private static ObjectMapper objectMapper = new ObjectMapper();
 
+    @GetMapping("/")
+    CustomReponse<List<ObjectNode>> getAllSkills2(@RequestParam(required = false) String address) {
+        return getAllSkills(address);
+    }
 
     @GetMapping("/all")
     CustomReponse<List<ObjectNode>> getAllSkills(@RequestParam(required = false) String address) {
@@ -52,7 +56,6 @@ public class SkillController {
                 ObjectNode jsonObject = objectMapper.convertValue(skill, ObjectNode.class);
                 jsonObject.put("task_total", skill.getTasks().size());
                 jsonObject.put("task_completed", task_completed);
-                jsonObject.remove("tasks");
                 skills.add(jsonObject);
             }
              
