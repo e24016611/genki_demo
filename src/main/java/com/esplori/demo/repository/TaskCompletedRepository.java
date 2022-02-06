@@ -14,4 +14,7 @@ public interface TaskCompletedRepository extends CrudRepository<TaskCompleted, T
 
     @Query("from TaskCompleted where address = ?1")
     List<TaskCompleted> findByAddress(String address);
+
+    @Query("from TaskCompleted where taskid = ?1")
+    List<TaskCompleted> findByTaskid(String taskid);
 }
